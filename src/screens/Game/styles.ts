@@ -3,22 +3,42 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    padding: 24,
   },
   title: {
+    fontSize: 32,
+    fontWeight: "bold",
+    marginBottom: 32,
+  },
+  endGameContainer: {
+    alignItems: "center",
+  },
+  endGameTitle: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 16,
   },
-  points: {
-    fontSize: 20,
-    marginTop: 20,
-    marginBottom: 20,
+  endGameScore: {
+    fontSize: 18,
+    marginBottom: 32,
   },
-  gameOver: {
-    fontSize: 30,
-    marginBottom: 20,
+  gameContainer: {
+    alignItems: "center",
+  },
+  scoreContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  scoreText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginRight: 8,
+  },
+  score: {
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });

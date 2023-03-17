@@ -5,11 +5,13 @@ export default function App() {
   return (
     <>
       <StatusBar
-        barStyle="light-content"
+        barStyle="dark-content"
         backgroundColor="transparent"
         translucent
       />
-      <Game cards={["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐵"]} />
+      <Game
+        cards={["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐵", "🐷"]}
+      />
     </>
   );
 }
