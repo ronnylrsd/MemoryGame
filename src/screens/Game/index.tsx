@@ -63,10 +63,13 @@ export function Game({ cards }: Props) {
 
   useEffect(() => {
     // Verifica se o jogador acertou todas as cartas
-    if (matchedCards.length === shuffledCards.length) {
+    if (
+      matchedCards.length === shuffledCards.length &&
+      shuffledCards.length > 0
+    ) {
       setGameOver(true);
     }
-  }, [matchedCards]);
+  }, [matchedCards, shuffledCards]);
 
   return (
     <View style={styles.container}>
