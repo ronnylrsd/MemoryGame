@@ -15,6 +15,13 @@ export function Game({ cards }: Props) {
   const [gameOver, setGameOver] = useState(false);
 
   function handlePressCard(index: number) {
+    // Verifica se a carta selecionada já está selecionada
+    if (selectedCards.includes(index)) {
+      setSelectedCards((prevSelectedCards) =>
+        prevSelectedCards.filter((cardIndex) => cardIndex !== index)
+      );
+      return;
+    }
     // Verifica se a carta selecionada já foi correspondido
     if (matchedCards.includes(index)) {
       return;
@@ -54,8 +61,10 @@ export function Game({ cards }: Props) {
 
   function handleRestartGame() {
     setSelectedCards([]);
+    setMatchedCards([]);
     setScore(0);
     setGameOver(false);
+    shuffleCards();
   }
 
   function shuffleCards() {
