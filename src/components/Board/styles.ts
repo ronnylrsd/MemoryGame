@@ -1,35 +1,25 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  board: {
-    flexWrap: "wrap",
+  boardContainer: {
     flexDirection: "row",
-    justifyContent: "center",
-  },
-  card: {
-    width: 70,
-    height: 70,
-    backgroundColor: "#fff",
-    margin: 5,
+    flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 10,
+    marginVertical: 20,
   },
-  cardFlipped: {
-    transform: [{ rotateY: "180deg" }],
-    width: 70,
-    height: 70,
-    backgroundColor: "#fff",
-    margin: 5,
+  cardContainer: {
+    width: 80,
+    height: 80,
+    backgroundColor: "white",
+    borderRadius: 8,
+    margin: 10,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 10,
-    backfaceVisibility: "hidden",
-  },
-  cardSolved: {
-    backgroundColor: "#6AC259",
+    elevation: 2,
   },
   cardText: {
     fontSize: 24,
+    fontWeight: "bold",
   },
 });

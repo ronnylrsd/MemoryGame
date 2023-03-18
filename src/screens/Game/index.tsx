@@ -15,7 +15,7 @@ export function Game({ cards }: Props) {
   const [gameOver, setGameOver] = useState(false);
 
   function handlePressCard(index: number) {
-    //Verifica se a carta selecionada já foi correspondido
+    // Verifica se a carta selecionada já foi correspondido
     if (matchedCards.includes(index)) {
       return;
     }
@@ -37,8 +37,15 @@ export function Game({ cards }: Props) {
         setScore((prevScore) => prevScore + 1);
       }
 
-      // Limpa as cartas selecionadas
-      setSelectedCards([]);
+      // Remove as cartas selecionadas
+      setSelectedCards((prevSelectedCards) => {
+        // Filtra o array de cartas selecionadas, removendo as cartas que correspondem às cartas atuais
+        const newSelectedCards = prevSelectedCards.filter(
+          (cardIndex) =>
+            cardIndex !== currentCardIndex && cardIndex !== selectedCards[0]
+        );
+        return newSelectedCards;
+      });
     } else {
       // Adiciona o índice da carta selecionada
       setSelectedCards((prevSelectedCards) => [...prevSelectedCards, index]);
@@ -86,7 +93,11 @@ export function Game({ cards }: Props) {
             <Text style={styles.scoreText}>Pontuação:</Text>
             <Text style={styles.score}>{score}</Text>
           </View>
-          <Board cards={shuffledCards} onPressCard={handlePressCard} />
+          <Board
+            cards={shuffledCards}
+            onPressCard={handlePressCard}
+            matchedCards={matchedCards}
+          />
         </View>
       )}
     </View>
