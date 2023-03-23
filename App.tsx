@@ -9,9 +9,7 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      <Game
-        cards={["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐵", "🐷"]}
-      />
+      <Game cards={["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻"]} />
     </>
   );
 }

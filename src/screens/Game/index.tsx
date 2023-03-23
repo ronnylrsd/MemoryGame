@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button, Text, View } from "react-native";
 import { Board } from "../../components/Board";
 import { styles } from "./styles";
@@ -14,71 +14,54 @@ export function Game({ cards }: Props) {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
 
-  function handlePressCard(index: number) {
-    // Verifica se a carta selecionada já está selecionada
-    if (selectedCards.includes(index)) {
-      setSelectedCards((prevSelectedCards) =>
-        prevSelectedCards.filter((cardIndex) => cardIndex !== index)
-      );
-      return;
-    }
-    // Verifica se a carta selecionada já foi correspondido
-    if (matchedCards.includes(index)) {
-      return;
-    }
-    // Verifica se já há uma carta selecionada
-    if (selectedCards.length === 1) {
-      // Armazena o índice da carta atualmente selecionada
-      const currentCardIndex = index;
-
-      // Verifica se a carta atual é igual à carta previamente selecionada
-      if (shuffledCards[currentCardIndex] === shuffledCards[selectedCards[0]]) {
-        // Adiciona as cartas selecionadas ao array matchedCards
-        setMatchedCards((prevMatchedCards) => [
-          ...prevMatchedCards,
-          ...selectedCards,
-          currentCardIndex,
-        ]);
-
-        // Adiciona 1 à pontuação
-        setScore((prevScore) => prevScore + 1);
+  const handlePressCard = useCallback(
+    (index: number) => {
+      if (selectedCards.includes(index) || matchedCards.includes(index)) {
+        return;
       }
 
-      // Remove as cartas selecionadas
-      setSelectedCards((prevSelectedCards) => {
-        // Filtra o array de cartas selecionadas, removendo as cartas que correspondem às cartas atuais
-        const newSelectedCards = prevSelectedCards.filter(
-          (cardIndex) =>
-            cardIndex !== currentCardIndex && cardIndex !== selectedCards[0]
-        );
-        return newSelectedCards;
-      });
-    } else {
-      // Adiciona o índice da carta selecionada
-      setSelectedCards((prevSelectedCards) => [...prevSelectedCards, index]);
-    }
-  }
+      const newSelectedCards = [...selectedCards, index];
+      setSelectedCards(newSelectedCards);
 
-  function handleRestartGame() {
+      if (newSelectedCards.length === 2) {
+        const [firstIndex, secondIndex] = newSelectedCards;
+        const firstCard = shuffledCards[firstIndex];
+        const secondCard = shuffledCards[secondIndex];
+
+        if (firstCard === secondCard) {
+          const newMatchedCards = [...matchedCards, firstIndex, secondIndex];
+          setMatchedCards(newMatchedCards);
+          setSelectedCards([]);
+          setScore((prevScore) => prevScore + 1);
+        } else {
+          setTimeout(() => {
+            setSelectedCards([]);
+          }, 1000);
+        }
+      }
+    },
+    [selectedCards, matchedCards, shuffledCards]
+  );
+
+  const handleRestartGame = useCallback(() => {
     setSelectedCards([]);
     setMatchedCards([]);
     setScore(0);
     setGameOver(false);
     shuffleCards();
-  }
+  }, []);
 
-  function shuffleCards() {
+  const shuffleCards = useCallback(() => {
     const doubledCards = cards.concat(cards);
     const shuffled = doubledCards.sort(() => Math.random() - 0.5);
     setShuffledCards(shuffled);
-  }
+  }, [cards]);
 
   useEffect(() => {
     shuffleCards();
-  }, []);
+  }, [shuffleCards]);
 
   useEffect(() => {
-    // Verifica se o jogador acertou todas as cartas
     if (
       matchedCards.length === shuffledCards.length &&
       shuffledCards.length > 0
